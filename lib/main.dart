@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_game/views/titleScreen.dart';
+import 'package:flame/util.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_game/boxgame.dart';
+import 'package:flutter/gestures.dart';
 
-void main() => runApp(FlutterGame());
+void main() {
+  // TODO: MAKE TAPS NOT MUTUALLY EXCLUSIVE
+  BoxGame game = BoxGame();
+  TapGestureRecognizer tapper = TapGestureRecognizer();
+  tapper.onTapDown = game.onTapDown;
+  //tapper.onTapUp = game.onTapUp;
+  runApp(game.widget);
 
-class FlutterGame extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: TitleScreen(title: 'Flutter Demo Home Page'),
-    );
-  }
+  Util flameUtil = Util();
+  flameUtil.fullScreen();
+  flameUtil.setOrientation(DeviceOrientation.portraitUp);
+  flameUtil.addGestureRecognizer(tapper);
 }
